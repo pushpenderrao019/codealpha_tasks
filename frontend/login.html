@@ -27,13 +27,15 @@
   </main>
 
   <script>
+    const BASE_URL = "https://codealpha-tasks-pnd1.onrender.com";
+
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
 
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${BASE_URL}/api/products`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
