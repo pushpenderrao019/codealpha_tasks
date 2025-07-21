@@ -8,10 +8,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("frontend"));
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 app.use("/api/products", require("./routes/products"));
 app.use("/api/auth", require("./routes/auth"));
