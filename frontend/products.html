@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Store</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Simple <strong>Store</strong></div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="hero">
+      <h2>Our Products</h2>
+    </section>
+
+    <section class="controls">
+      <input type="text" id="searchInput" placeholder="Search products..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;" />
+
+      <select id="categoryFilter" style="padding: 10px; border-radius: 8px;">
+        <option value="All">All Categories</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Gadgets">Gadgets</option>
+        <option value="Accessories">Accessories</option>
+      </select>
+
+      <select id="sortPrice" style="padding: 10px; border-radius: 8px;">
+        <option value="">Sort by Price</option>
+        <option value="lowToHigh">Low to High</option>
+        <option value="highToLow">High to Low</option>
+      </select>
+    </section>
+
+    <section id="product-list">
+      <!-- Products will be injected by JS -->
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p>Email: info@simplestore.com</p>
+        <p>Phone: +1 (123) 456-7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Simple Store. Made with ❤️ by <a href="https://pushpenderrao019.github.io/portfolio/">Pushpender Rao</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("active");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Simple <strong>Store</strong></div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+  <main id="product-details"></main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p>Email: info@simplestore.com</p>
+        <p>Phone: +1 (123) 456-7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Simple Store. Made with ❤️ by <a href="https://pushpenderrao019.github.io/portfolio/">Pushpender Rao</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const id = new URLSearchParams(window.location.search).get("id");
+    const BASE_URL = "https://codealphatasks-production-de11.up.railway.app";
+    
+    fetch(`${BASE_URL}/api/products/${id}`)
+      .then(res => res.json())
+      .then(product => {
+        document.getElementById("product-details").innerHTML = `
+          <div class="product-detail">
+            <img class="product-image" src="${product.imageUrl}" alt="${product.name}" />
+            <div class="info">
+              <h2>${product.name}</h2>
+              <p>${product.description}</p>
+              <p class="price">₹${product.price}</p>
+              <button class="cart-btn" onclick="addToCart('${product._id}')">Add to Cart</button>
+            </div>
+          </div>
+        `;
+      });
+
+    function addToCart(id) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const found = cart.find(p => p.id === id);
+      if (found) found.qty += 1;
+      else cart.push({ id, qty: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Added to cart");
+    }
+
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("active");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Store</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Simple <strong>Store</strong></div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Shop the Best Deals</h2>
+      <p>Trendy, affordable, and delivered to your doorstep.</p>
+    </section>
+
+    <section id="featured-products" class="product-section">
+      <h2 style="text-align: center;">Featured Products</h2>
+      <div id="product-list"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p>Email: info@simplestore.com</p>
+        <p>Phone: +1 (123) 456-7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Simple Store. Made with ❤️ by <a href="https://pushpenderrao019.github.io/portfolio/">Pushpender Rao</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const BASE_URL = "https://codealphatasks-production-de11.up.railway.app";
+
+    fetch(`${BASE_URL}/api/products`)
+      .then(res => res.json())
+      .then(products => {
+        const featured = products.slice(0, 4); // Show only 4 products
+        const list = document.getElementById('product-list');
+        featured.forEach(product => {
+          const div = document.createElement("div");
+          div.innerHTML = `
+            <h3>${product.name}</h3>
+            <img src="${product.imageUrl}" alt="${product.name}" />
+            <p>₹${product.price}</p>
+            <a href="product.html?id=${product._id}">View</a>
+            <button class="cart-btn" onclick="addToCart('${product._id}')">Add to Cart</button>
+          `;
+          list.appendChild(div);
+        });
+      });
+
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("active");
+    }
+
+    function addToCart(productId) {
+      // Example using localStorage
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: productId, qty: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Product added to cart!");
+    }
+  </script>
+</body>
+</html>

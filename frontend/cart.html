@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Your <strong>Cart</strong></div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+
+  <main>
+      <div class="cart-page-wrapper">
+        <div class="cart-container">
+          <h2>Your Cart</h2>
+          <ul id="cart-items" class="cart-items"></ul>
+          <div class="cart-total" id="cart-total"></div>
+          <button id="checkoutBtn" class="btn" onclick="checkout()">Place Order</button>
+        </div>
+      </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p>Email: info@simplestore.com</p>
+        <p>Phone: +1 (123) 456-7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Simple Store. Made with ❤️ by <a href="https://pushpenderrao019.github.io/portfolio/">Pushpender Rao</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const BASE_URL = "https://codealphatasks-production-de11.up.railway.app";
+    
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    async function loadCart() {
+      const itemsContainer = document.getElementById("cart-items");
+      const totalContainer = document.getElementById("cart-total");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      itemsContainer.innerHTML = "";
+      totalContainer.innerHTML = "";
+    
+      if (cart.length === 0) {
+        itemsContainer.innerHTML = "<li class='empty-cart'>🛒 Your cart is empty</li>";
+        checkoutBtn.style.display = "none";
+        return;
+      }
+    
+      let total = 0;
+    
+      for (let item of cart) {
+        const res = await fetch(`${BASE_URL}/api/products/${item.id}`);
+        const product = await res.json();
+        const subtotal = product.price * item.qty;
+        total += subtotal;
+    
+        const li = document.createElement("li");
+        li.className = "cart-item";
+        li.innerHTML = `
+          <img src="${product.imageUrl}" alt="${product.name}" class="cart-img"/>
+          <div class="cart-info">
+            <span class="cart-name">${product.name}</span>
+            <span class="cart-price">₹${subtotal}</span>
+            <div class="cart-actions">
+              <div class="qty-controls">
+                <button onclick="updateQty('${item.id}', -1)">–</button>
+                <span>x${item.qty}</span>
+                <button onclick="updateQty('${item.id}', 1)">+</button>
+              </div>
+              <button onclick="removeItem('${item.id}')" class="remove-btn">🗑</button>
+            </div>
+          </div>
+        `;
+        itemsContainer.appendChild(li);
+      }
+    
+      totalContainer.innerHTML = `<strong>Total:</strong> ₹${total}`;
+      checkoutBtn.style.display = "inline-block";
+    }
+
+    function updateQty(id, delta) {
+      cart = cart.map(item => {
+        if (item.id === id) {
+          return { ...item, qty: Math.max(1, item.qty + delta) };
+        }
+        return item;
+      });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart();
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(item => item.id !== id);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart();
+    }
+
+    async function checkout() {
+      const token = localStorage.getItem("token");
+      if (!token) return alert("Login first");
+
+      const res = await fetch(`${BASE_URL}/api/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ products: cart })
+      });
+
+      if (res.ok) {
+        alert("Order placed!");
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
+      } else {
+        alert("Error placing order");
+      }
+    }
+
+    loadCart();
+
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("active");
+    }
+  </script>
+</body>
+</html>
