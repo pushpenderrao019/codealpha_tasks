@@ -1,4 +1,3 @@
-// Auto-detect environment (localhost vs production)
 const BASE_URL = "https://codealphatasks-production-de11.up.railway.app";
 
 let allProducts = [];
