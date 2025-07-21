@@ -1,30 +1,29 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const path = require("path");
 require("dotenv").config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("frontend"));
 
-// Connect to MongoDB
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-// Routes
-app.use("/api/auth", require("./routes/auth")); // Example, add other routes similarly
+// API Routes
+app.use("/api/products", require("./routes/products"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/orders", require("./routes/orders"));
 
-// Serve static frontend
-const frontendPath = path.join(__dirname, "..", "frontend");
-app.use(express.static(frontendPath));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
+// Root Route for Health Check
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
 
-// Use Railway's PORT
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Dynamic Port
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(Server started on port ${PORT}));
