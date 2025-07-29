@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">E-Shop</div>
+    <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('active')">&#9776;</button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Product Details</h2>
+    <p>Explore more about your selected product</p>
+  </section>
+
+  <!-- Product Detail Section -->
+  <div class="product-detail">
+    <img id="product-img" src="" alt="Product Image" class="product-image" />
+    <div class="info">
+      <h2 id="product-name">Product Name</h2>
+      <p id="product-desc">Product description will appear here.</p>
+      <p class="price"><span id="product-price">0</span></p>
+      <button id="add-to-cart" class="btn">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <p>We offer top-quality products at affordable prices. Your satisfaction is our priority.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 E-Shop. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="scripts/product.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">E-Shop</div>
+    <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('active')">&#9776;</button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html" class="active">Cart</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Your Shopping Cart</h2>
+    <p>Review items and proceed to checkout.</p>
+  </section>
+
+  <!-- Cart Container -->
+  <div class="cart-page-wrapper">
+    <div class="cart-container">
+      <h2>Your Cart</h2>
+      <ul id="cart-items" class="cart-items">
+        <!-- Cart items will be injected here via JS -->
+      </ul>
+
+      <div class="cart-total">
+        Total: ₹<span id="cart-total">0</span>
+      </div>
+
+      <div style="text-align: right;">
+        <button class="cart-btn" onclick="checkout()">Place Order</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <p>We offer top-quality products at affordable prices. Your satisfaction is our priority.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 E-Shop. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="scripts/cart.js"></script>
+</body>
+</html>

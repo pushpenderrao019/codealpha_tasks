@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>  
+  <!-- Header -->
+  <header>
+    <div class="logo">E-Shop</div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Welcome</h2>
+    <p>Register now to enjoy shopping.</p>
+  </section>
+
+  <form id="registerForm">
+    <label for="username">Username</label>
+    <input type="text" id="username" placeholder="Username" required />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Email" required />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Password" required />
+
+    <button type="submit">Register</button>
+
+    <p style="margin-top: 16px; text-align: center;">
+      Already have an account? <a href="login.html">Login here</a>
+    </p>
+  </form>
+
+  <script src="scripts/register.js"></script>
+</body>
+</html>
